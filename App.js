@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
+
+const Stack = createNativeStackNavigator();
+
+import Inicio from './telas/Inicio';
+import Login from './telas/Login';
+import Quiz from './telas/Quiz';
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    'Poppins': require('./misc/Poppins.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Inicio" component={Inicio} options={{headerShown:false}}/>
+        <Stack.Screen name="Login" component={Login} options={{title:' '}}/>
+        <Stack.Screen name="Quiz" component={Quiz}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
